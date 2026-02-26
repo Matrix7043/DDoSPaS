@@ -1,0 +1,19 @@
+services:
+  openresty:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+    networks:
+      - ddosnet
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - ddosnet
+  
+networks:
+  ddosnet:
