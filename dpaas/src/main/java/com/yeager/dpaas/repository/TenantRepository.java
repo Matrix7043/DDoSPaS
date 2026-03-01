@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface TenantRepository extends JpaRepository<Tenant, String> {
-    Optional<Tenant, String> findByDomain(String domain);
+    Optional<Tenant> findByDomain(String domain);
 }
