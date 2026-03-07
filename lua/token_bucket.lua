@@ -1,12 +1,12 @@
-local redis = require "resty.redis"
+local redis = require("resty.redis")
 
 local red = redis:new()
 red:set_timeout(1000)
 
 local ok, err = red:connect("redis", 6379)
 if not ok then
-    ngx.log(ngx.ERR, "Redis connection failed: ", err )
-    return ngx.exit(500)
+	ngx.log(ngx.ERR, "Redis connection failed: ", err)
+	return ngx.exit(500)
 end
 
 local ip = ngx.var.remote_addr
@@ -53,12 +53,13 @@ return tokens
 local res, err = red:eval(script, 1, ip, capacity, refill_rate, now)
 
 if not res then
-    ngx.log(ngx.ERR, "Redis eval failed: ", err)
-    return ngx.exit(500)
+	ngx.log(ngx.ERR, "Redis eval failed: ", err)
+	return ngx.exit(500)
 end
 
 if res == -1 then
-    return ngx.exit(429)
+	return ngx.exit(429)
 end
 
 red:set_keepalive(10000, 100)
+
