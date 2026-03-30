@@ -8,12 +8,16 @@ services:
     networks:
       - ddosnet
 
-  springboot:
-    build: ./dpaas
+  postgres:
+    image: postgres:16-alpine
     ports:
-      - "4000:4000"
-    depends_on:
-      - redis
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: dpaas
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
     networks:
       - ddosnet
 
@@ -23,6 +27,10 @@ services:
       - "6379:6379"
     networks:
       - ddosnet
-  
+
 networks:
   ddosnet:
+
+
+volumes:
+  pgdata:

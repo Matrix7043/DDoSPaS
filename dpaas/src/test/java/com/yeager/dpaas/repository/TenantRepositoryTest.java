@@ -5,7 +5,7 @@ import com.yeager.dpaas.enums.PlanType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
@@ -23,7 +23,7 @@ public class TenantRepositoryTest {
     String verificationToken = "1111";
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         tenant1 = Tenant.builder()
                 .id(id)
                 .origin(origin)
@@ -35,7 +35,7 @@ public class TenantRepositoryTest {
     }
 
     @Test
-    public void saveTenant(){
+    public void saveTenant() {
 
         Tenant savedTenant = tenantRepository.save(tenant1);
         assertNotNull(savedTenant);
@@ -50,7 +50,7 @@ public class TenantRepositoryTest {
         Tenant savedTenant = tenantRepository.save(tenant1);
 
         Tenant foundTenant = tenantRepository.findByDomain(savedTenant.getDomain())
-                .orElseThrow(() ->  new RuntimeException("Tenant not Found"));
+                .orElseThrow(() -> new RuntimeException("Tenant not Found"));
 
         assertNotNull(foundTenant);
         assertEquals(savedTenant.getId(), foundTenant.getId());
